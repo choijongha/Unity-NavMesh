@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityStandardAssets.Characters.ThirdPerson;
 public class PlayerMovement : MonoBehaviour
 {
     public Camera cam;
     public NavMeshAgent navMeshAgent;
-
+    public ThirdPersonCharacter character;
     private void Start()
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.updateRotation = false;
     }
     void Update()
     {
@@ -23,6 +25,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 navMeshAgent.SetDestination(hit.point);
             }
+        }
+        if(navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance)
+        {
+            character.Move(navMeshAgent.desiredVelocity, false, false);
+        }
+        else
+        {
+            character.Move(Vector3.zero, false, false);
         }
     }
 }
