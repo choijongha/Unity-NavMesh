@@ -6,7 +6,12 @@ public class PlayerMovement : MonoBehaviour
 {
     public Camera cam;
     public NavMeshAgent navMeshAgent;
-    
+
+    private void Start()
+    {
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+    }
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
